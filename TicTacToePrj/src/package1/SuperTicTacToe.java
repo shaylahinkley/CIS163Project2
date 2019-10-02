@@ -3,7 +3,7 @@ package package1;
 import javax.swing.*;
 import java.awt.*;
 
-public class SuperTicTacToe extends JFrame{
+public class SuperTicTacToe {
     public static void  main(String[] args) {
         JFrame frame = new JFrame("GeoCountDownTimer");
 

@@ -1,12 +1,10 @@
 package package1;
-
 import javax.swing.*;
 import javax.swing.border.Border;
 import javax.swing.border.LineBorder;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-
 public class SuperTicTacToePanel extends JPanel{
     private JButton[][] board;
     private Cell[][] iBoard;
