@@ -46,6 +46,7 @@ public class SuperTicTacToeGame {
         this.size = size;
         status = GameStatus.IN_PROGRESS;
         board = new Cell[size][size];
+        turn = Cell.X;
 
         for (int row = 0; row < size; row++) {
             for (int col = 0; col < size; col++) {
@@ -61,7 +62,7 @@ public class SuperTicTacToeGame {
 
     public SuperTicTacToeGame() {
         status = GameStatus.IN_PROGRESS;
-        board = new Cell[3][3];
+        board = new Cell[size][size];
         reset();
     }
 
