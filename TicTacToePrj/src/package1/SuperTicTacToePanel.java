@@ -33,54 +33,73 @@ public class SuperTicTacToePanel extends JPanel{
     /**instance variable object of class SuperTicTacToeGame */
     private SuperTicTacToeGame game;
 
+    /***/
     private int boardSize;
     /*******************************************************************************************************************
      *Constructor that sets the size of the board, sets up
      *
      *******************************************************************************************************************/
     public SuperTicTacToePanel() {
-        try {
-            int size = Integer.parseInt(JOptionPane.showInputDialog("Enter board size"));
-            if (size < 0) {
-                throw new IllegalArgumentException("Input not valid");
+
+        //turning String into integer
+        int size = Integer.parseInt(JOptionPane.showInputDialog("Enter board size"));
+
+        //checks if board size is valid and allows user to enter new board size if error
+        while (size < 3 || size > 15) {
+
+            //throws errors
+            try {
+                throw new IllegalArgumentException("Input for board size not valid");
+
+            } catch (NumberFormatException ex) {
+                JOptionPane.showMessageDialog(null, "Input integer only.", "Alert", JOptionPane.ERROR_MESSAGE);
+            } catch (IllegalArgumentException te) {
+                JOptionPane.showMessageDialog(null, "Input for board size not valid. Must be 3-15.", "Alert", JOptionPane.ERROR_MESSAGE);
+            } finally {
+
+                //always executing allowing for user to try entering in new size
+                size = Integer.parseInt(JOptionPane.showInputDialog("Enter board size"));
             }
-            //can change the size of the board
-            game = new SuperTicTacToeGame(size);
-            boardSize = size;
-        }catch (NumberFormatException ex){
-            JOptionPane.showMessageDialog(null,"Input integer only.","Alert",JOptionPane.ERROR_MESSAGE);
-        }catch(IllegalArgumentException te){
-            JOptionPane.showMessageDialog(null,"Input positive.","Alert",JOptionPane.ERROR_MESSAGE);
+
         }
 
-        try {
-            int win = Integer.parseInt(JOptionPane.showInputDialog("Enter number of connection"));
-            if (win< 0) {
-                throw new IllegalArgumentException("Input not valid");
-            }
-            if((boardSize > 3 || boardSize == 3) && win < 3){
-                throw new IllegalArgumentException("Input for connection is too small");
-            }
-            if(win > boardSize){
-                throw new IllegalArgumentException("Input for connection is too large");
-            }
+        //sets the valid game board size to boardSize
+        game = new SuperTicTacToeGame(size);
+        boardSize = size;
 
-            //can change the size of the board
-        }catch (NumberFormatException ex){
-            JOptionPane.showMessageDialog(null,"Input integer only.","Alert",JOptionPane.ERROR_MESSAGE);
-        }catch(IllegalArgumentException te){
-            JOptionPane.showMessageDialog(null,"Input invalid.","Alert",JOptionPane.ERROR_MESSAGE);
+
+        //changes String into integer
+        int numCon = Integer.parseInt(JOptionPane.showInputDialog("Enter number of connections"));
+
+        //checks if the number of connections is valid and allows for user to enter new connection number if invalid
+        while (numCon < 0 || boardSize == 3 && numCon != 3 || boardSize > 3 && numCon <= 3 || numCon > boardSize) {
+
+            //throws errors
+            try {
+                throw new IllegalArgumentException();
+
+                //can change the size of the board
+            } catch (NumberFormatException ex) {
+                JOptionPane.showMessageDialog(null, "Input integer only.", "Alert", JOptionPane.ERROR_MESSAGE);
+            } catch (IllegalArgumentException te) {
+                JOptionPane.showMessageDialog(null, "Input invalid.", "Alert", JOptionPane.ERROR_MESSAGE);
+            } finally {
+
+                //always executes and allows user to try again
+                numCon = Integer.parseInt(JOptionPane.showInputDialog("Enter number of connection"));
+            }
         }
 
-            String first = JOptionPane.showInputDialog("Who goes first? X or O");
-            if (first.equals("X")) {
 
-            }
-            else if(first.equals("O")){
+        String first = JOptionPane.showInputDialog("Who goes first? X or O");
+        if(first.equals("X")) {
 
-            }else{
-                JOptionPane.showMessageDialog(null,"Input invalid.","Alert",JOptionPane.ERROR_MESSAGE);
-            }
+        }
+        else if(first.equals("O")){
+
+        }else{
+                JOptionPane.showMessageDialog(null,"Input invalid. Enter just X or O with no spaces.","Alert",JOptionPane.ERROR_MESSAGE);
+        }
 
 
         //create Image Icons
