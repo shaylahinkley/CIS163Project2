@@ -92,17 +92,15 @@ public class SuperTicTacToePanel extends JPanel{
 
         //creating string
         String first = JOptionPane.showInputDialog("Who goes first? X or O");
-
-        //checks if string is x or o and throws error if not
-        while(!first.equals("X") && !first.equals("O")) {
-            try {
-                throw new IllegalArgumentException();
-            } catch(IllegalArgumentException te){
-                JOptionPane.showMessageDialog(null, "Input invalid. Enter just X or O with no spaces.", "Alert", JOptionPane.ERROR_MESSAGE);
-            }finally {
-                first = JOptionPane.showInputDialog("Who goes first? X or O");
-            }
+        if (first.equals("X")) {
+            game.setTurnX();
+        } else if (first.equals("O")) {
+            game.setTurnO();
+        } else {
+            JOptionPane.showMessageDialog(null, "Input invalid. Default X used.", "Alert", JOptionPane.ERROR_MESSAGE);
+            game.setTurnX();
         }
+
 
         //create Image Icons
         xIcon = new ImageIcon ("./src/x.jpg");

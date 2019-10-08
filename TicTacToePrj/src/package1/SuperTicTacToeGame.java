@@ -204,16 +204,6 @@ public class SuperTicTacToeGame {
              numSpaces = 0;
              return GameStatus.IN_PROGRESS;
          }
-
-//         //checking for vertical rows
-//         for (int r = 0; r < 3; r++) {
-//            for (int c = 0; c < 3 - 2; c++) {
-//                if (board[r][c] == Cell.X && board[r][c + 1] == Cell.X && board[r][c + 2] == Cell.X) {
-//                    return GameStatus.X_WON;
-//                }
-//            }
-//        }
-//        return GameStatus.IN_PROGRESS;
      }
 
     /*******************************************************************************************************************
@@ -264,4 +254,22 @@ public class SuperTicTacToeGame {
      public void setWin(int win) {
         this.win = win;
      }
+
+    /*******************************************************************************************************************
+     *Method that sets the turn to X player
+     *
+     ******************************************************************************************************************/
+     public void setTurnX() {
+         turn = Cell.X;
+     }
+
+    /*******************************************************************************************************************
+     *Method that sets the turn to O player
+     *
+     ******************************************************************************************************************/
+     public void setTurnO() {
+         turn = Cell.O;
+     }
+
+
 }
