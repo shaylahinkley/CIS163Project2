@@ -170,6 +170,12 @@ public class SuperTicTacToePanel extends JPanel{
                 game.reset();
                 displayBoard();
             }
+
+            if (game.getGameStatus() == GameStatus.O_WON) {
+                JOptionPane.showMessageDialog(null, "O won and X lost!\n The game will reset");
+                game.reset();
+                displayBoard();
+            }
         }
     }
 }
