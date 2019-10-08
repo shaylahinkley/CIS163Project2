@@ -18,6 +18,7 @@ public class SuperTicTacToeGame {
     /**Instance variable status of type GameStatus that sets the status of the game */
     private GameStatus status;
 
+
     /**Instance variable turn of type cell that sets what player turn it is */
     private Cell turn;
 
@@ -134,6 +135,7 @@ public class SuperTicTacToeGame {
      public int getSize() {
         return size;
      }
+
 
     /*******************************************************************************************************************
      *set Method for size of board

@@ -33,14 +33,55 @@ public class SuperTicTacToePanel extends JPanel{
     /**instance variable object of class SuperTicTacToeGame */
     private SuperTicTacToeGame game;
 
+    private int boardSize;
     /*******************************************************************************************************************
      *Constructor that sets the size of the board, sets up
      *
      *******************************************************************************************************************/
     public SuperTicTacToePanel() {
+        try {
+            int size = Integer.parseInt(JOptionPane.showInputDialog("Enter board size"));
+            if (size < 0) {
+                throw new IllegalArgumentException("Input not valid");
+            }
+            //can change the size of the board
+            game = new SuperTicTacToeGame(size);
+            boardSize = size;
+        }catch (NumberFormatException ex){
+            JOptionPane.showMessageDialog(null,"Input integer only.","Alert",JOptionPane.ERROR_MESSAGE);
+        }catch(IllegalArgumentException te){
+            JOptionPane.showMessageDialog(null,"Input positive.","Alert",JOptionPane.ERROR_MESSAGE);
+        }
 
-        //can change the size of the board
-        game = new SuperTicTacToeGame(5);
+        try {
+            int win = Integer.parseInt(JOptionPane.showInputDialog("Enter number of connection"));
+            if (win< 0) {
+                throw new IllegalArgumentException("Input not valid");
+            }
+            if((boardSize > 3 || boardSize == 3) && win < 3){
+                throw new IllegalArgumentException("Input for connection is too small");
+            }
+            if(win > boardSize){
+                throw new IllegalArgumentException("Input for connection is too large");
+            }
+
+            //can change the size of the board
+        }catch (NumberFormatException ex){
+            JOptionPane.showMessageDialog(null,"Input integer only.","Alert",JOptionPane.ERROR_MESSAGE);
+        }catch(IllegalArgumentException te){
+            JOptionPane.showMessageDialog(null,"Input invalid.","Alert",JOptionPane.ERROR_MESSAGE);
+        }
+
+            String first = JOptionPane.showInputDialog("Who goes first? X or O");
+            if (first.equals("X")) {
+
+            }
+            else if(first.equals("O")){
+
+            }else{
+                JOptionPane.showMessageDialog(null,"Input invalid.","Alert",JOptionPane.ERROR_MESSAGE);
+            }
+
 
         //create Image Icons
         xIcon = new ImageIcon ("./src/x.jpg");
