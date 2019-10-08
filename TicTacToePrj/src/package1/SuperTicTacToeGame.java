@@ -31,6 +31,8 @@ public class SuperTicTacToeGame {
     /**instance variable win of type int used to indicate a win has occurred */
     private int win;
 
+    /**instance variable for the amount of spaces taken up on the board */
+    private int numSpaces;
     /** */
     private static final boolean AI = true;
 
@@ -65,6 +67,7 @@ public class SuperTicTacToeGame {
         status = GameStatus.IN_PROGRESS;
         board = new Cell[size][size];
         reset();
+
     }
 
     /*******************************************************************************************************************
@@ -102,14 +105,115 @@ public class SuperTicTacToeGame {
      *
      ******************************************************************************************************************/
      private GameStatus isWinner() {
-        for (int r = 0; r < 3; r++) {
-            for (int c = 0; c < 3 - 2; c++) {
-                if (board[r][c] == Cell.X && board[r][c + 1] == Cell.X && board[r][c + 2] == Cell.X) {
-                    return GameStatus.X_WON;
-                }
-            }
-        }
-        return GameStatus.IN_PROGRESS;
+
+         //checking for vertical rows
+         for(int c = 0; c < size; c++) {
+             for (int r = 0; r < (size - 2); r++) {
+                 if (board[r][c] == Cell.X) {
+                     if (board[r + 1][c] == Cell.X) {
+                         if (board[r + 2][c] == Cell.X) {
+                             return GameStatus.X_WON;
+                         }
+                     }
+                 }
+                 if (board[r][c] == Cell.O) {
+                     if (board[r + 1][c] == Cell.O) {
+                         if (board[r + 2][c] == Cell.O) {
+                             return GameStatus.O_WON;
+                         }
+                     }
+                 }
+             }
+         }
+
+
+         //checking for horizontal rows
+         for(int r = 0; r < size; r++) {
+             for(int c = 0; c < (size -2); c++) {
+                 if(board[r][c] == Cell.X) {
+                     if(board[r][c+1] == Cell.X) {
+                         if(board[r][c+2] == Cell.X) {
+                             return GameStatus.X_WON;
+                         }
+                     }
+                 }
+                 if((board[r][c] == Cell.O)) {
+                     if(board[r][c+1] == Cell.O) {
+                         if(board[r][c+2] == Cell.O) {
+                             return GameStatus.O_WON;
+                         }
+                     }
+                 }
+             }
+         }
+
+         //checking a diagonal from top left to bottom right
+         for(int r = 0; r < (size - 2); r++) {
+             for(int c = 0; c < (size - 2); c++){
+                 if(board[r][c] == Cell.X) {
+                     if(board[r+1][c+1] == Cell.X) {
+                         if(board[r+2][c+2] == Cell.X) {
+                             return GameStatus.X_WON;
+                         }
+                     }
+                 }
+                 if(board[r][c] == Cell.O) {
+                     if(board[r+1][c+1] == Cell.O) {
+                         if(board[r+2][c+2] == Cell.O) {
+                             return GameStatus.O_WON;
+                         }
+                     }
+                 }
+             }
+         }
+
+         //checking from top right corner to the bottom left corner
+         for(int r = 2; r < size; r++) {
+             for(int c = 0; c < (size - 2); c++) {
+                 if(board[r][c] == Cell.X) {
+                     if(board[r-1][c+1] == Cell.X) {
+                         if(board[r-2][c+2] == Cell.X) {
+                             return GameStatus.X_WON;
+                         }
+                     }
+                 }
+                 if(board[r][c] == Cell.O) {
+                     if(board[r-1][c+1] == Cell.O) {
+                         if(board[r-2][c+2] == Cell.O) {
+                             return GameStatus.O_WON;
+                         }
+                     }
+                 }
+             }
+         }
+
+         //checking to see how many cells are taken up on the board
+         for(int r = 0; r < size; r++) {
+             for(int c = 0; c < size; c++) {
+                 if(board[r][c] == Cell.O || board[r][c] == Cell.X) {
+                     numSpaces++;
+                 }
+             }
+         }
+
+         //deciding cats game
+         if((size * size) <= numSpaces) {
+             return GameStatus.CATS;
+         }
+         else {
+             numSpaces = 0;
+             return GameStatus.IN_PROGRESS;
+         }
+
+//         //checking for vertical rows
+//         for (int r = 0; r < 3; r++) {
+//            for (int c = 0; c < 3 - 2; c++) {
+//                if (board[r][c] == Cell.X && board[r][c + 1] == Cell.X && board[r][c + 2] == Cell.X) {
+//                    return GameStatus.X_WON;
+//                }
+//            }
+//        }
+//        return GameStatus.IN_PROGRESS;
      }
 
     /*******************************************************************************************************************
