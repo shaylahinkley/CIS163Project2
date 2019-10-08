@@ -69,10 +69,11 @@ public class SuperTicTacToePanel extends JPanel{
 
 
         //changes String into integer
-        int numCon = Integer.parseInt(JOptionPane.showInputDialog("Enter number of connections"));
+        int win = Integer.parseInt(JOptionPane.showInputDialog("Enter number of connections"));
+        game.setWin(win);
 
         //checks if the number of connections is valid and allows for user to enter new connection number if invalid
-        while (numCon < 0 || boardSize == 3 && numCon != 3 || boardSize > 3 && numCon <= 3 || numCon > boardSize) {
+        while (win < 0 || boardSize == 3 && win != 3 || boardSize > 3 && win <= 3 || win > boardSize) {
 
             //throws errors
             try {
@@ -86,7 +87,8 @@ public class SuperTicTacToePanel extends JPanel{
             } finally {
 
                 //always executes and allows user to try again
-                numCon = Integer.parseInt(JOptionPane.showInputDialog("Enter number of connection"));
+                win = Integer.parseInt(JOptionPane.showInputDialog("Enter number of connection"));
+                game.setWin(win);
             }
         }
 

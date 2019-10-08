@@ -28,7 +28,7 @@ public class SuperTicTacToeGame {
     /**instance variable size of type int used to set the size of the board */
     private int size;
 
-    /**instance variable win of type int used to indicate a win has occurred */
+    /**instance variable win of type int to indicate the number of connections used to win*/
     private int win;
 
     /**instance variable for the amount of spaces taken up on the board */
@@ -97,7 +97,7 @@ public class SuperTicTacToeGame {
                 board[row][col] = Cell.EMPTY;
             }
         }
-            turn = Cell.X;
+        turn = (turn == Cell.O) ? Cell.X : Cell.O;
     }
 
     /*******************************************************************************************************************
