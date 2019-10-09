@@ -33,8 +33,11 @@ public class SuperTicTacToePanel extends JPanel{
     /**instance variable object of class SuperTicTacToeGame */
     private SuperTicTacToeGame game;
 
-    /***/
+    /**instance variable of type int for the size of the board*/
     private int boardSize;
+
+    /**private JButton for the undo*/
+    private JButton undoBtn;
 
     /*******************************************************************************************************************
      *Constructor that sets the size of the board, sets up
@@ -153,6 +156,7 @@ public class SuperTicTacToePanel extends JPanel{
         add (new JLabel("!!!!!!  Super TicTacToe  !!!!"), BorderLayout.NORTH);
         add (center, BorderLayout.CENTER);
         add (bottom, BorderLayout.SOUTH);
+
     }
 
     /*******************************************************************************************************************
@@ -175,6 +179,9 @@ public class SuperTicTacToePanel extends JPanel{
                 }
             }
         }
+
+//        undoBtn = new JButton("Undo");
+//        add(undoBtn, BorderLayout.SOUTH);
     }
     /*******************************************************************************************************************
      *ButtonListener class that implements ActionListener
@@ -204,6 +211,17 @@ public class SuperTicTacToePanel extends JPanel{
                 game.reset();
                 displayBoard();
             }
+
+            if (game.getGameStatus() == GameStatus.CATS) {
+                JOptionPane.showMessageDialog(null, "Draw!\n The game will reset");
+                game.reset();
+                displayBoard();
+            }
+
+//            undoBtn.addActionListener(this);
+//            if(undoBtn == e.getSource()) {
+//                game.undo();
+//            }
         }
     }
 }

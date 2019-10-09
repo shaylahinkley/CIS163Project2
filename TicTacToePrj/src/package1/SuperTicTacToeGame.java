@@ -98,6 +98,8 @@ public class SuperTicTacToeGame {
         //if it is turn O, then switch to turn X, otherwise Turn O
         turn = (turn == Cell.O) ? Cell.X : Cell.O;
         status = isWinner();
+
+//        backup.add();
     }
 
     /********************************************************************************************************************
@@ -125,6 +127,10 @@ public class SuperTicTacToeGame {
 
         //change status to in progress
         status = GameStatus.IN_PROGRESS;
+
+        for(int i = 0; i < backup.size(); i++) {
+            backup.remove(i);
+        }
 
     }
 
@@ -357,6 +363,18 @@ public class SuperTicTacToeGame {
             return GameStatus.IN_PROGRESS;
         }
     }
+
+    /*******************************************************************************************************************
+     *Method that enables user to undo the turn they just did using an undo button on the Panel
+     *
+     *
+     *
+     ******************************************************************************************************************/
+//    public void undo() {
+//        backup.remove(backup.size() - 1);
+//        turn = (turn == Cell.O) ? Cell.X : Cell.O;
+//
+//    }
 
     /*******************************************************************************************************************
      *getter Method for GameStatus
