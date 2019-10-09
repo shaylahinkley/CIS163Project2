@@ -80,6 +80,9 @@ public class SuperTicTacToeGame {
     /*******************************************************************************************************************
      *Method  that selects a box on the board to place player turn
      *Checks if turn was a winning turn
+     *
+     * @param row int current row
+     * @param col int current col
      *******************************************************************************************************************/
 
     public void select(int row, int col) {
@@ -102,54 +105,58 @@ public class SuperTicTacToeGame {
      *
      *******************************************************************************************************************/
     public void reset() {
+
+        //goes through all rows
         for (int row = 0; row < size; row++) {
+
+            //goes through all columns
             for (int col = 0; col < size; col++) {
+
+                //set each cell to empty
                 board[row][col] = Cell.EMPTY;
             }
         }
+
+        //reset count win to 0
         this.countWin = 0;
+
+        //choose the turn
         turn = (turn == Cell.O) ? Cell.X : Cell.O;
+
+        //change status to in progress
         status = GameStatus.IN_PROGRESS;
 
     }
 
     /*******************************************************************************************************************
-     *Method that checks the columns for connections
-     *
-     ******************************************************************************************************************/
-//    private boolean isNCol(int row, int col, int connections) {
-//
-//        if(col + connections  < size) {
-//            for(int r = 0; r < size; r++) {
-//                if (board[row][col] == Cell.X) {
-//                    return true;
-//                }
-//
-//                if (board[row][col] == Cell.O) {
-//                    return true;
-//                }
-//            }
-//        }
-//        return false;
-//    }
-
-    /*******************************************************************************************************************
      *Method that checks the rows for connections
      *
+     * @param row int current row
+     * @param col int current col
+     * @param connections int number of connections
+     * @return true if there are connections
+     * @return false if there are not connections
      ******************************************************************************************************************/
     private boolean isNRow(int row, int col, int connections) {
 
         int countX = 0;
         int countY = 0;
 
+
         for(int i = 0; i < connections; i++) {
+
+            //checks if the cells in a row counted are less than the size
             if(col + i < size) {
+
+                //if the next one in the row is a X
                 if(board[row][col + i] == Cell.X) {
                     countX++;
                     if(countX == connections) {
                         return true;
                     }
                 }
+
+                //if the next one in the row is a O
                 if(board[row][col+i] == Cell.O) {
                     countY++;
                     if(countY == connections) {
@@ -165,6 +172,11 @@ public class SuperTicTacToeGame {
     /*******************************************************************************************************************
      *Method that checks the columns for connections
      *
+     * @param row int current row
+     * @param col int current col
+     * @param connections int number of connections needed to win
+     * @return false if no connections
+     * @return true if there are connections
      ******************************************************************************************************************/
     private boolean isNCol(int row, int col, int connections) {
 
@@ -172,13 +184,19 @@ public class SuperTicTacToeGame {
         int countY = 0;
 
         for(int i = 0; i < connections; i++) {
+
+            //checks if the row is less than the size and that the connections is less than the size
             if(row + i < size) {
+
+                //if the cell is an X
                 if(board[row + i][col] == Cell.X) {
                     countX++;
                     if(countX == connections) {
                         return true;
                     }
                 }
+
+                //if the cell is an O
                 if(board[row + i][col] == Cell.O) {
                     countY++;
                     if(countY == connections) {
@@ -191,133 +209,110 @@ public class SuperTicTacToeGame {
     }
 
     /*******************************************************************************************************************
+     *Method that checks the diagonal for connections from top left to bottom right
+     *
+     * @param row int current row
+     * @param col int current col
+     * @param connections int number of connections to win
+     * @return true if there are connections
+     * @return false if there are not connections
+     ******************************************************************************************************************/
+    private boolean isDiagonal1(int row, int col, int connections) {
+
+        int countX = 0;
+        int countY = 0;
+
+        for(int i = 0; i < connections; i++) {
+            if(board[row + i][col + i] == Cell.X) {
+                countX++;
+                if(countX == connections) {
+                    return true;
+                }
+            }
+            if(board[row + i][col + i] == Cell.O) {
+                countY++;
+                if(countY == connections) {
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+
+    /*******************************************************************************************************************
+     *Method that checks the diagonal for connections from bottom left to top right
+     *
+     * @param row int current row
+     * @param col int current col
+     * @param connections int number of connections to win
+     * @return true if there is a winning connection
+     * @return false if there is not a winning connection
+     ******************************************************************************************************************/
+    private boolean isDiagonal2(int row, int col, int connections) {
+
+        int countX = 0;
+        int countY = 0;
+
+        for(int i = 0; i < connections; i++) {
+                if(board[row + i][col - i] == Cell.X) {
+                    countX++;
+                    if(countX == connections) {
+                        return true;
+                    }
+                }
+                if(board[row + i][col - i] == Cell.O) {
+                    countY++;
+                    if(countY == connections) {
+                        return true;
+                    }
+                }
+        }
+        return false;
+    }
+
+    /*******************************************************************************************************************
      *Method that determines if player has won the game
      *
+     * @return GameStatus current game status
      ******************************************************************************************************************/
     private GameStatus isWinner() {
 
+        this.numSpaces = 0;
 
         for(int c = 0; c < size; c++) {
             for(int r = 0; r < size; r++ ) {
                 if(isNRow(r,c, this.connections) && board[r][c] == Cell.X) {
                     return GameStatus.X_WON;
                 }
-                if(isNRow(r,c, this.connections) && board[r][c] == Cell.O) {
+                else if(isNRow(r,c, this.connections) && board[r][c] == Cell.O) {
                     return GameStatus.O_WON;
                 }
-                if(isNCol(r,c, this.connections) && board[r][c] == Cell.X) {
+                else if(isNCol(r,c, this.connections) && board[r][c] == Cell.X) {
                     return GameStatus.X_WON;
                 }
-                if(isNCol(r,c, this.connections) && board[r][c] == Cell.O) {
+                else if(isNCol(r,c, this.connections) && board[r][c] == Cell.O) {
                     return GameStatus.O_WON;
+                }
+                else if(board[r][c] == Cell.EMPTY) {
+                    this.numSpaces++;
                 }
 
             }
         }
-        return GameStatus.CATS;
 
-
-
-//        //number of empty cells on the board
-//        this.numSpaces = 0;
-//        for (int r = 0; r < size; r++) {
-//            for (int c = 0; c < size; c++) {
-//
-//                //if cell is not empty check connection
-//                if (board[r][c] == Cell.X || board[r][c] == Cell.O) {
-//
-//                    //temporary value being checked for connection
-//                    int tCol = c;
-//
-//                    int i = 0;
-//
-//                    //checks for connections with the length of user input
-//                    while (board[r][tCol] == board[r][c] && i <= this.connections) {
-//
-//                        //if you read the end of the board you go back to the beginning
-//                        i++;
-//                        if (tCol == (size - 1)) {
-//                            tCol = 0;
-//                        }
-//
-//                        //if you do not reach the bottom then you move down a column
-//                        else {
-//                            tCol++;
-//                        }
-//
-//                        //if the connection criteria is met, then retrieve who the winner is
-//                        if (i == this.connections) {
-//                            if (board[r][c] == Cell.X) {
-//                                return GameStatus.X_WON;
-//                            } else if (board[r][c] == Cell.O) {
-//                                return GameStatus.O_WON;
-//                            }
-//                        }
-//                    }
-//
-//                    //temporary row that is checked or connection
-//                    int tRow = r;
-//
-//                    int j = 0;
-//
-//                    //checks all the rows for connections of user input length
-//                    while (board[tRow][c] == board[r][c] && j <= this.connections) {
-//                        j++;
-//
-//                        //if you read the end of the board go back to the beginning
-//                        if (tRow == (size - 1)) {
-//                            tRow = 0;
-//                        }
-//
-//                        //if you do not reach the bottom of the board move down a row
-//                        else {
-//                            tRow++;
-//                        }
-//
-//                        //if win conditions are met retrieve the user winner
-//                        if (j == this.connections) {
-//                            if (board[r][c] == Cell.X) {
-//                                return GameStatus.X_WON;
-//                            } else if (board[r][c] == Cell.O) {
-//                                return GameStatus.O_WON;
-//                            }
-//                        }
-//                    }
-//
-//                    int x = 0;
-//                    while(board[tRow][tCol] == board[r][c] && x <= this.connections) {
-//                        x++;
-//
-//
-//                    }
-//
-//                    //checks if cells are empty
-//                } else if (board[r][c] == Cell.EMPTY) {
-//                    this.numSpaces++;
-//                }
-//
-//                //error if null is thrown
-//                else if (board[r][c] == null) {
-//                    throw new NullPointerException();
-//                } else {
-//                    throw new NullPointerException();
-//                }
-//
-//            }
-//        }
-//
-//        //if there are no empty cells then there is a cats game
-//        if(this.numSpaces == 0) {
-//            return GameStatus.CATS;
-//        }
-//
-//        //game is still in progress
-//        return GameStatus.IN_PROGRESS;
+        //checks for cats game
+        if(this.numSpaces == 0) {
+            return GameStatus.CATS;
+        } else {
+            return GameStatus.IN_PROGRESS;
+        }
     }
 
     /*******************************************************************************************************************
      *getter Method for GameStatus
      *
+     *
+     * @return status GameStatus of the game
      ******************************************************************************************************************/
     public GameStatus getGameStatus() {
         return status;
@@ -326,6 +321,8 @@ public class SuperTicTacToeGame {
     /*******************************************************************************************************************
      *getter Method for Board
      *
+     *
+     * @return board Cell[][]
      ******************************************************************************************************************/
     public Cell[][] getBoard() {
         return board;
@@ -334,6 +331,7 @@ public class SuperTicTacToeGame {
     /*******************************************************************************************************************
      *getter Method for size of board
      *
+     * @return size int the size of the board
      ******************************************************************************************************************/
     public int getSize() {
         return size;
@@ -359,6 +357,7 @@ public class SuperTicTacToeGame {
     /*******************************************************************************************************************
      *setter Method for win. Sets instance variable to instance variable
      *
+     * @param win int the number of wins
      ******************************************************************************************************************/
     public void setWin(int win) {
         this.win = win;
@@ -401,7 +400,7 @@ public class SuperTicTacToeGame {
     /*******************************************************************************************************************
      *Method that sets the number of connections needed
      *
-     *
+     * @return row int current row
      ******************************************************************************************************************/
     public int getRow() {
         return row;
@@ -420,7 +419,7 @@ public class SuperTicTacToeGame {
     /*******************************************************************************************************************
      *Method that sets the number of connections needed
      *
-     *
+     * @return col int current col
      ******************************************************************************************************************/
     public int getCol() {
         return col;
