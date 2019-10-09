@@ -42,27 +42,29 @@ public class SuperTicTacToePanel extends JPanel{
      *******************************************************************************************************************/
     public SuperTicTacToePanel() {
 
-        //turning String into integer
-        int size = Integer.parseInt(JOptionPane.showInputDialog("Enter board size"));
+        int size = 0;
 
-        //checks if board size is valid and allows user to enter new board size if error
-        while (size < 3 || size > 15) {
+        //checking if format is an integer
+        try {
+            size = Integer.parseInt(JOptionPane.showInputDialog("Enter board size"));
+            while (size < 3 || size > 15) {
+                try {
+                    throw new IllegalArgumentException("Input for board size not valid");
 
-            //throws errors
-            try {
-                throw new IllegalArgumentException("Input for board size not valid");
+                } catch (IllegalArgumentException te) {
+                    JOptionPane.showMessageDialog(null, "Input for board size not valid. Must be 3-15.", "Alert", JOptionPane.ERROR_MESSAGE);
+                } finally {
 
-            } catch (NumberFormatException ex) {
-                JOptionPane.showMessageDialog(null, "Input integer only.", "Alert", JOptionPane.ERROR_MESSAGE);
-            } catch (IllegalArgumentException te) {
-                JOptionPane.showMessageDialog(null, "Input for board size not valid. Must be 3-15.", "Alert", JOptionPane.ERROR_MESSAGE);
-            } finally {
-
-                //always executing allowing for user to try entering in new size
-                size = Integer.parseInt(JOptionPane.showInputDialog("Enter board size"));
+                    //always executing allowing for user to try entering in new size
+                    size = Integer.parseInt(JOptionPane.showInputDialog("Enter board size"));
+                }
             }
 
+        } catch (NumberFormatException ex) {
+            JOptionPane.showMessageDialog(null, "Input an integer only between 3-15.", "Alert", JOptionPane.ERROR_MESSAGE);
+            size = Integer.parseInt(JOptionPane.showInputDialog("Enter board size"));
         }
+
 
         //sets the valid game board size to boardSize
         game = new SuperTicTacToeGame(size);
