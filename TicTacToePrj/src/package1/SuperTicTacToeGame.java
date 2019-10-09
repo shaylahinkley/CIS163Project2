@@ -102,13 +102,22 @@ public class SuperTicTacToeGame {
      *
      ******************************************************************************************************************/
      private GameStatus isWinner() {
-        for (int r = 0; r < 3; r++) {
-            for (int c = 0; c < 3 - 2; c++) {
+        for (int r = 0; r < size; r++) {
+            for (int c = 0; c < size - 2; c++) {
                 if (board[r][c] == Cell.X && board[r][c + 1] == Cell.X && board[r][c + 2] == Cell.X) {
                     return GameStatus.X_WON;
                 }
             }
         }
+         for (int r = 0; r < size; r++) {
+             for (int c = 0; c < size-2; c++) {
+                 if (board[r][c] == Cell.O && board[r][c + 1] == Cell.O && board[r][c + 2] == Cell.O) {
+                     return GameStatus.O_WON;
+                 }
+
+
+             }
+         }
         return GameStatus.IN_PROGRESS;
      }
 

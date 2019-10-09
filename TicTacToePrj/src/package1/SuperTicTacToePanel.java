@@ -54,14 +54,14 @@ public class SuperTicTacToePanel extends JPanel{
         }
 
         try {
-            int win = Integer.parseInt(JOptionPane.showInputDialog("Enter number of connection"));
-            if (win< 0) {
+            int connect = Integer.parseInt(JOptionPane.showInputDialog("Enter number of connection"));
+            if (connect< 0) {
                 throw new IllegalArgumentException("Input not valid");
             }
-            if((boardSize > 3 || boardSize == 3) && win < 3){
+            if((boardSize > 3 || boardSize == 3) && connect < 3){
                 throw new IllegalArgumentException("Input for connection is too small");
             }
-            if(win > boardSize){
+            if(connect > boardSize){
                 throw new IllegalArgumentException("Input for connection is too large");
             }
 
@@ -73,10 +73,11 @@ public class SuperTicTacToePanel extends JPanel{
         }
 
             String first = JOptionPane.showInputDialog("Who goes first? X or O");
-            if (first.equals("X")) {
+            if (first.equals("X")||first.equals("x")) {
+
 
             }
-            else if(first.equals("O")){
+            else if(first.equals("O")||first.equals("o")){
 
             }else{
                 JOptionPane.showMessageDialog(null,"Input invalid.","Alert",JOptionPane.ERROR_MESSAGE);
@@ -167,6 +168,11 @@ public class SuperTicTacToePanel extends JPanel{
 
             if (game.getGameStatus() == GameStatus.X_WON) {
                 JOptionPane.showMessageDialog(null, "X won and O lost!\n The game will reset");
+                game.reset();
+                displayBoard();
+            }
+            if (game.getGameStatus() == GameStatus.O_WON) {
+                JOptionPane.showMessageDialog(null, "O won and X lost!\n The game will reset");
                 game.reset();
                 displayBoard();
             }
