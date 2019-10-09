@@ -18,7 +18,7 @@ public class SuperTicTacToePanel extends JPanel{
     /**instance variable board of type JButton that makes every box on the board a button */
     private JButton[][] board;
 
-   /**instance variable iBoard of type Cell that creates the physical cells on the board */
+    /**instance variable iBoard of type Cell that creates the physical cells on the board */
     private Cell[][] iBoard;
 
     /**instance variable xIcon of type ImageIcon creates the x symbol for the board turn*/

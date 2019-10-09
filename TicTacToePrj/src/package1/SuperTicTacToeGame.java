@@ -44,10 +44,10 @@ public class SuperTicTacToeGame {
     private ArrayList<Point> backup = new ArrayList<Point>();
 
     /*******************************************************************************************************************
-    *Constructor that sets the size of the board
-    *
-    * @param size
-    *******************************************************************************************************************/
+     *Constructor that sets the size of the board
+     *
+     * @param size
+     *******************************************************************************************************************/
 
     public SuperTicTacToeGame(int size) {
         this.size = size;
@@ -63,9 +63,9 @@ public class SuperTicTacToeGame {
     }
 
     /*******************************************************************************************************************
-    *Constructor that creates a new board, resets, and changes game status
-    *
-    *******************************************************************************************************************/
+     *Constructor that creates a new board, resets, and changes game status
+     *
+     *******************************************************************************************************************/
 
     public SuperTicTacToeGame() {
         status = GameStatus.IN_PROGRESS;
@@ -74,9 +74,9 @@ public class SuperTicTacToeGame {
     }
 
     /*******************************************************************************************************************
-    *Method  that selects a box on the board to place player turn
-    *Checks if turn was a winning turn
-    *******************************************************************************************************************/
+     *Method  that selects a box on the board to place player turn
+     *Checks if turn was a winning turn
+     *******************************************************************************************************************/
 
     public void select(int row, int col) {
         if (board[row][col] != Cell.EMPTY) {
@@ -90,10 +90,10 @@ public class SuperTicTacToeGame {
         status = isWinner();
     }
 
-   /********************************************************************************************************************
-    *Method that resets the size of the board and clears players turns
-    *
-    *******************************************************************************************************************/
+    /********************************************************************************************************************
+     *Method that resets the size of the board and clears players turns
+     *
+     *******************************************************************************************************************/
     public void reset() {
         for (int row = 0; row < size; row++) {
             for (int col = 0; col < size; col++) {
@@ -110,9 +110,9 @@ public class SuperTicTacToeGame {
      *Method that determines if player has won the game
      *
      ******************************************************************************************************************/
-     private GameStatus isWinner() {
+    private GameStatus isWinner() {
 
-         //checking diagonal from top left to bottom right
+        //checking diagonal from top left to bottom right
 //         this.countWin = 0;
 //         int con = this.connections;
 //         for(int c = 0; c < size; c++) {
@@ -134,168 +134,168 @@ public class SuperTicTacToeGame {
 //             }
 //         }
 
-         //number of empty cells on the board
-         this.numSpaces = 0;
-         for (int r = 0; r < size; r++) {
-             for (int c = 0; c < size; c++) {
+        //number of empty cells on the board
+        this.numSpaces = 0;
+        for (int r = 0; r < size; r++) {
+            for (int c = 0; c < size; c++) {
 
-                 //if cell is not empty check connection
-                 if (board[r][c] == Cell.X || board[r][c] == Cell.O) {
+                //if cell is not empty check connection
+                if (board[r][c] == Cell.X || board[r][c] == Cell.O) {
 
-                     //temporary value being checked for connection
-                     int tCol = c;
+                    //temporary value being checked for connection
+                    int tCol = c;
 
-                     int i = 0;
+                    int i = 0;
 
-                     //checks for connections with the length of user input
-                     while (board[r][tCol] == board[r][c] && i <= this.connections) {
+                    //checks for connections with the length of user input
+                    while (board[r][tCol] == board[r][c] && i <= this.connections) {
 
-                         //if you read the end of the board you go back to the beginning
-                         i++;
-                         if (tCol == (size - 1)) {
-                             tCol = 0;
-                         }
+                        //if you read the end of the board you go back to the beginning
+                        i++;
+                        if (tCol == (size - 1)) {
+                            tCol = 0;
+                        }
 
-                         //if you do not reach the bottom then you move down a column
-                         else {
-                             tCol++;
-                         }
+                        //if you do not reach the bottom then you move down a column
+                        else {
+                            tCol++;
+                        }
 
-                         //if the connection criteria is met, then retrieve who the winner is
-                         if (i == this.connections) {
-                             if (board[r][c] == Cell.X) {
-                                 return GameStatus.X_WON;
-                             } else if (board[r][c] == Cell.O) {
-                                 return GameStatus.O_WON;
-                             }
-                         }
-                     }
+                        //if the connection criteria is met, then retrieve who the winner is
+                        if (i == this.connections) {
+                            if (board[r][c] == Cell.X) {
+                                return GameStatus.X_WON;
+                            } else if (board[r][c] == Cell.O) {
+                                return GameStatus.O_WON;
+                            }
+                        }
+                    }
 
-                     //temporary row that is checked or connection
-                     int tRow = r;
+                    //temporary row that is checked or connection
+                    int tRow = r;
 
-                     int j = 0;
+                    int j = 0;
 
-                     //checks all the rows for connections of user input length
-                     while (board[tRow][c] == board[r][c] && j <= this.connections) {
-                         j++;
+                    //checks all the rows for connections of user input length
+                    while (board[tRow][c] == board[r][c] && j <= this.connections) {
+                        j++;
 
-                         //if you read the end of the board go back to the beginning
-                         if (tRow == (size - 1)) {
-                             tRow = 0;
-                         }
+                        //if you read the end of the board go back to the beginning
+                        if (tRow == (size - 1)) {
+                            tRow = 0;
+                        }
 
-                         //if you do not reach the bottom of the board move down a row
-                         else {
-                             tRow++;
-                         }
+                        //if you do not reach the bottom of the board move down a row
+                        else {
+                            tRow++;
+                        }
 
-                         //if win conditions are met retrieve the user winner
-                         if (j == this.connections) {
-                             if (board[r][c] == Cell.X) {
-                                 return GameStatus.X_WON;
-                             } else if (board[r][c] == Cell.O) {
-                                 return GameStatus.O_WON;
-                             }
-                         }
-                     }
+                        //if win conditions are met retrieve the user winner
+                        if (j == this.connections) {
+                            if (board[r][c] == Cell.X) {
+                                return GameStatus.X_WON;
+                            } else if (board[r][c] == Cell.O) {
+                                return GameStatus.O_WON;
+                            }
+                        }
+                    }
 
-                     //checks if cells are empty
-                 } else if (board[r][c] == Cell.EMPTY) {
-                     this.numSpaces++;
-                 }
+                    //checks if cells are empty
+                } else if (board[r][c] == Cell.EMPTY) {
+                    this.numSpaces++;
+                }
 
-                 //error if null is thrown
-                 else if (board[r][c] == null) {
-                     throw new NullPointerException();
-                 } else {
-                     throw new NullPointerException();
-                 }
-             }
-         }
+                //error if null is thrown
+                else if (board[r][c] == null) {
+                    throw new NullPointerException();
+                } else {
+                    throw new NullPointerException();
+                }
+            }
+        }
 
-         //if there are no empty cells then there is a cats game
-         if(this.numSpaces == 0) {
-             return GameStatus.CATS;
-         }
+        //if there are no empty cells then there is a cats game
+        if(this.numSpaces == 0) {
+            return GameStatus.CATS;
+        }
 
-         //game is still in progress
-         return GameStatus.IN_PROGRESS;
-     }
+        //game is still in progress
+        return GameStatus.IN_PROGRESS;
+    }
 
     /*******************************************************************************************************************
      *getter Method for GameStatus
      *
      ******************************************************************************************************************/
-     public GameStatus getGameStatus() {
+    public GameStatus getGameStatus() {
         return status;
-     }
+    }
 
     /*******************************************************************************************************************
      *getter Method for Board
      *
      ******************************************************************************************************************/
-     public Cell[][] getBoard() {
+    public Cell[][] getBoard() {
         return board;
-     }
+    }
 
     /*******************************************************************************************************************
      *getter Method for size of board
      *
      ******************************************************************************************************************/
-     public int getSize() {
+    public int getSize() {
         return size;
-     }
+    }
 
 
     /*******************************************************************************************************************
      *set Method for size of board
      *
      ******************************************************************************************************************/
-     public void setSize(int size) {
+    public void setSize(int size) {
         this.size = size;
-     }
+    }
 
     /*******************************************************************************************************************
      *getter method for Win
      *
      ******************************************************************************************************************/
-     public int getWin() {
+    public int getWin() {
         return win;
-     }
+    }
 
     /*******************************************************************************************************************
      *setter Method for win. Sets instance variable to instance variable
      *
      ******************************************************************************************************************/
-     public void setWin(int win) {
+    public void setWin(int win) {
         this.win = win;
-     }
+    }
 
     /*******************************************************************************************************************
      *Method that sets the turn to X player
      *
      ******************************************************************************************************************/
-     public void setTurnX() {
-         turn = Cell.X;
-     }
+    public void setTurnX() {
+        turn = Cell.X;
+    }
 
     /*******************************************************************************************************************
      *Method that sets the turn to O player
      *
      ******************************************************************************************************************/
-     public void setTurnO() {
-         turn = Cell.O;
-     }
+    public void setTurnO() {
+        turn = Cell.O;
+    }
 
     /*******************************************************************************************************************
      *Method that sets the number of connections needed
      *
      * @param connections
      ******************************************************************************************************************/
-     public void setConnections(int connections) {
-         this.connections = connections;
-     }
+    public void setConnections(int connections) {
+        this.connections = connections;
+    }
 
 
 }
