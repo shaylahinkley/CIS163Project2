@@ -223,18 +223,20 @@ public class SuperTicTacToeGame {
         int countY = 0;
 
         for(int i = 0; i < connections; i++) {
-            if(board[row + i][col + i] == Cell.X) {
-                countX++;
-                if(countX == connections) {
-                    return true;
-                }
-            }
-            if(board[row + i][col + i] == Cell.O) {
-                countY++;
-                if(countY == connections) {
-                    return true;
-                }
-            }
+           if(row + i < size && col + i < size) {
+               if (board[row + i][col + i] == Cell.X) {
+                   countX++;
+                   if (countX == connections) {
+                       return true;
+                   }
+               }
+               if (board[row + i][col + i] == Cell.O) {
+                   countY++;
+                   if (countY == connections) {
+                       return true;
+                   }
+               }
+           }
         }
         return false;
     }
@@ -252,20 +254,38 @@ public class SuperTicTacToeGame {
 
         int countX = 0;
         int countY = 0;
+        int countX2 = 0;
+        int countY2 = 0;
 
         for(int i = 0; i < connections; i++) {
-                if(board[row + i][col - i] == Cell.X) {
-                    countX++;
-                    if(countX == connections) {
-                        return true;
-                    }
-                }
-                if(board[row + i][col - i] == Cell.O) {
-                    countY++;
-                    if(countY == connections) {
-                        return true;
-                    }
-                }
+              if(row + i < size && col - i >= 0) {
+                  if (board[row + i][col - i] == Cell.X) {
+                      countX++;
+                      if (countX == connections) {
+                          return true;
+                      }
+                  }
+                  if (board[row + i][col - i] == Cell.O) {
+                      countY++;
+                      if (countY == connections) {
+                          return true;
+                      }
+                  }
+              }
+              if(row - i >= 0 && col + i < size) {
+                  if (board[row - i][col + i] == Cell.X) {
+                      countX2++;
+                      if (countX2 == connections) {
+                          return true;
+                      }
+                  }
+                  if (board[row - i ][col + i] == Cell.O) {
+                      countY2++;
+                      if (countY2 == connections) {
+                          return true;
+                      }
+                  }
+              }
         }
         return false;
     }
@@ -279,8 +299,11 @@ public class SuperTicTacToeGame {
 
         this.numSpaces = 0;
 
+        //going through the board
         for(int c = 0; c < size; c++) {
             for(int r = 0; r < size; r++ ) {
+
+                //checking rows and columns for wins
                 if(isNRow(r,c, this.connections) && board[r][c] == Cell.X) {
                     return GameStatus.X_WON;
                 }
@@ -295,6 +318,21 @@ public class SuperTicTacToeGame {
                 }
                 else if(board[r][c] == Cell.EMPTY) {
                     this.numSpaces++;
+                }
+
+                //checking diagonals for wins
+                if(isDiagonal1(r,c, this.connections) && board[r][c] == Cell.X) {
+                    return GameStatus.X_WON;
+                }
+                else if(isDiagonal1(r,c, this.connections) && board[r][c] == Cell.O) {
+                    return GameStatus.O_WON;
+                }
+
+                else if(isDiagonal2(r,c, this.connections) && board[r][c] == Cell.O) {
+                    return GameStatus.O_WON;
+                }
+                else if(isDiagonal2(r,c, this.connections) && board[r][c] == Cell.X) {
+                    return GameStatus.X_WON;
                 }
 
             }
