@@ -35,6 +35,9 @@ public class SuperTicTacToeGame {
     private int numSpaces;
 
     /** */
+    private int countWin;
+
+    /** */
     private static final boolean AI = true;
 
     /** */
@@ -97,7 +100,10 @@ public class SuperTicTacToeGame {
                 board[row][col] = Cell.EMPTY;
             }
         }
+        this.countWin = 0;
         turn = (turn == Cell.O) ? Cell.X : Cell.O;
+        status = GameStatus.IN_PROGRESS;
+
     }
 
     /*******************************************************************************************************************
@@ -106,137 +112,116 @@ public class SuperTicTacToeGame {
      ******************************************************************************************************************/
      private GameStatus isWinner() {
 
-        //checking for vertical rows
-         for(int c = 0; c < size; c++) {
-             for (int r = 0; r < (size - 2); r++) {
-                 if (board[r][c] == Cell.X) {
-                     if (board[r + 1][c] == Cell.X) {
-                         if (board[r + 2][c] == Cell.X) {
-                             return GameStatus.X_WON;
-                         }
-                     }
-                 }
-                 if (board[r][c] == Cell.O) {
-                     if (board[r + 1][c] == Cell.O) {
-                         if (board[r + 2][c] == Cell.O) {
-                             return GameStatus.O_WON;
-                         }
-                     }
-                 }
-             }
-         }
-
-//         int con = connections;
-//         int count = 0;
+//         //checking diagonal from top left to bottom right
+//         this.countWin = 0;
+//         int con = this.connections;
 //         for(int c = 0; c < size; c++) {
-//            for(int r = 0; r < size; r++) {
-//                for (int i = 0; i < con; i++) {
-//                    if (board[r + i][c] == Cell.X) {
-//                        count++;
-//                        if (count == connections) {
-//                            return GameStatus.X_WON;
-//                        }
-//                    }
-//                }
-//            }
-//         }
-
-//         int con = connections;
-//         int count = 0;
-//         for(int c = 0; c < size; c++) {
-//             for (int r = 0; r < size; r++) {
-//                 if (board[r][c] == Cell.X) {
-//                     for(int i = 0; i < con; i++) {
-//                         if(board[r + i][c] == Cell.X) {
-//                             count++;
-//                             if(count == connections) {
-//                                 return GameStatus.X_WON;
-//                             }
+//             for(int r = 0; r < size; r++) {
+//                 for(int i = 0; i <= con; i++) {
+//                     if(board[r + i][c + i] == Cell.X) {
+//                         this.countWin++;
+//                         if(this.countWin == this.connections) {
+//                             return GameStatus.X_WON;
+//                         }
+//                     }
+//                     if(board[r + i][c + i] == Cell.O) {
+//                         this.countWin++;
+//                         if(this.countWin == this.connections) {
+//                             return GameStatus.O_WON;
 //                         }
 //                     }
 //                 }
 //             }
 //         }
 
+         //number of empty cells on the board
+         int numEmpty = 0;
+         for (int r = 0; r < size; r++) {
+             for (int c = 0; c < size; c++) {
 
+                 //if cell is not empty check connection
+                 if (board[r][c] == Cell.X || board[r][c] == Cell.O) {
 
-         //checking for horizontal rows
-         for(int r = 0; r < size; r++) {
-             for(int c = 0; c < (size -2); c++) {
-                 if(board[r][c] == Cell.X) {
-                     if(board[r][c+1] == Cell.X) {
-                         if(board[r][c+2] == Cell.X) {
-                             return GameStatus.X_WON;
+                     //temporary value being checked for connection
+                     int tCol = c;
+
+                     int i = 0;
+
+                     //checks for connections with the length of user input
+                     while (board[r][tCol] == board[r][c] && i <= this.connections) {
+
+                         //if you read the end of the board you go back to the beginning
+                         i++;
+                         if (tCol == (size - 1)) {
+                             tCol = 0;
+                         }
+
+                         //if you do not reach the bottom then you move down a column
+                         else {
+                             tCol++;
+                         }
+
+                         //if the connection criteria is met, then retrieve who the winner is
+                         if (i == this.connections) {
+                             if (board[r][c] == Cell.X) {
+                                 return GameStatus.X_WON;
+                             } else if (board[r][c] == Cell.O) {
+                                 return GameStatus.O_WON;
+                             }
                          }
                      }
+
+                     //temporary row that is checked or connection
+                     int tRow = r;
+
+                     int j = 0;
+
+                     //checks all the rows for connections of user input length
+                     while (board[tRow][c] == board[r][c] && j <= this.connections) {
+                         j++;
+
+                         //if you read the end of the board go back to the beginning
+                         if (tRow == (size - 1)) {
+                             tRow = 0;
+                         }
+
+                         //if you do not reach the bottom of the board move down a row
+                         else {
+                             tRow++;
+                         }
+
+                         //if win conditions are met retrieve the user winner
+                         if (j == this.connections) {
+                             if (board[r][c] == Cell.X) {
+                                 return GameStatus.X_WON;
+                             } else if (board[r][c] == Cell.O) {
+                                 return GameStatus.O_WON;
+                             }
+                         }
+                     }
+
+
+                     //checks if cells are empty
+                 } else if (board[r][c] == Cell.EMPTY) {
+                     numEmpty++;
                  }
-                 if((board[r][c] == Cell.O)) {
-                     if(board[r][c+1] == Cell.O) {
-                         if(board[r][c+2] == Cell.O) {
-                             return GameStatus.O_WON;
-                         }
-                     }
+
+                 //error if null is thrown
+                 else if (board[r][c] == null) {
+                     throw new NullPointerException();
+                 } else {
+                     throw new NullPointerException();
                  }
              }
          }
 
-         //checking a diagonal from top left to bottom right
-         for(int r = 0; r < (size - 2); r++) {
-             for(int c = 0; c < (size - 2); c++){
-                 if(board[r][c] == Cell.X) {
-                     if(board[r+1][c+1] == Cell.X) {
-                         if(board[r+2][c+2] == Cell.X) {
-                             return GameStatus.X_WON;
-                         }
-                     }
-                 }
-                 if(board[r][c] == Cell.O) {
-                     if(board[r+1][c+1] == Cell.O) {
-                         if(board[r+2][c+2] == Cell.O) {
-                             return GameStatus.O_WON;
-                         }
-                     }
-                 }
-             }
-         }
-
-         //checking from top right corner to the bottom left corner
-         for(int r = 2; r < size; r++) {
-             for(int c = 0; c < (size - 2); c++) {
-                 if(board[r][c] == Cell.X) {
-                     if(board[r-1][c+1] == Cell.X) {
-                         if(board[r-2][c+2] == Cell.X) {
-                             return GameStatus.X_WON;
-                         }
-                     }
-                 }
-                 if(board[r][c] == Cell.O) {
-                     if(board[r-1][c+1] == Cell.O) {
-                         if(board[r-2][c+2] == Cell.O) {
-                             return GameStatus.O_WON;
-                         }
-                     }
-                 }
-             }
-         }
-
-         //checking to see how many cells are taken up on the board
-         for(int r = 0; r < size; r++) {
-             for(int c = 0; c < size; c++) {
-                 if(board[r][c] == Cell.O || board[r][c] == Cell.X) {
-                     numSpaces++;
-                 }
-             }
-         }
-
-         //deciding cats game
-         if((size * size) <= numSpaces) {
+         //if there are no empty cells then there is a cats game
+         if(numEmpty == 0) {
              return GameStatus.CATS;
          }
-         else {
-             numSpaces = 0;
-             return GameStatus.IN_PROGRESS;
-         }
+
+         //game is still in progress
+         return GameStatus.IN_PROGRESS;
      }
 
     /*******************************************************************************************************************
