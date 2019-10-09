@@ -22,7 +22,7 @@ public class SuperTicTacToeGame {
     /**Instance variable turn of type cell that sets what player turn it is */
     private Cell turn;
 
-    /** */
+    /**Instance variable of type int that is used for the number of connections to win*/
     private int connections;
 
     /**instance variable size of type int used to set the size of the board */
@@ -85,6 +85,7 @@ public class SuperTicTacToeGame {
 
         board[row][col] = turn;
 
+        //if it is turn O, then switch to turn X, otherwise Turn O
         turn = (turn == Cell.O) ? Cell.X : Cell.O;
         status = isWinner();
     }
@@ -93,7 +94,6 @@ public class SuperTicTacToeGame {
     *Method that resets the size of the board and clears players turns
     *
     *******************************************************************************************************************/
-
     public void reset() {
         for (int row = 0; row < size; row++) {
             for (int col = 0; col < size; col++) {
@@ -112,7 +112,7 @@ public class SuperTicTacToeGame {
      ******************************************************************************************************************/
      private GameStatus isWinner() {
 
-//         //checking diagonal from top left to bottom right
+         //checking diagonal from top left to bottom right
 //         this.countWin = 0;
 //         int con = this.connections;
 //         for(int c = 0; c < size; c++) {
@@ -135,7 +135,7 @@ public class SuperTicTacToeGame {
 //         }
 
          //number of empty cells on the board
-         int numEmpty = 0;
+         this.numSpaces = 0;
          for (int r = 0; r < size; r++) {
              for (int c = 0; c < size; c++) {
 
@@ -200,10 +200,9 @@ public class SuperTicTacToeGame {
                          }
                      }
 
-
                      //checks if cells are empty
                  } else if (board[r][c] == Cell.EMPTY) {
-                     numEmpty++;
+                     this.numSpaces++;
                  }
 
                  //error if null is thrown
@@ -216,7 +215,7 @@ public class SuperTicTacToeGame {
          }
 
          //if there are no empty cells then there is a cats game
-         if(numEmpty == 0) {
+         if(this.numSpaces == 0) {
              return GameStatus.CATS;
          }
 
@@ -292,6 +291,7 @@ public class SuperTicTacToeGame {
     /*******************************************************************************************************************
      *Method that sets the number of connections needed
      *
+     * @param connections
      ******************************************************************************************************************/
      public void setConnections(int connections) {
          this.connections = connections;

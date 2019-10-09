@@ -35,6 +35,7 @@ public class SuperTicTacToePanel extends JPanel{
 
     /***/
     private int boardSize;
+
     /*******************************************************************************************************************
      *Constructor that sets the size of the board, sets up
      *
@@ -151,8 +152,9 @@ public class SuperTicTacToePanel extends JPanel{
         add (center, BorderLayout.CENTER);
         add (bottom, BorderLayout.SOUTH);
     }
+
     /*******************************************************************************************************************
-     *
+     *Method that puts the X and O's in the cells depending on what player turn it is
      *
      *******************************************************************************************************************/
     private void displayBoard() {
@@ -162,16 +164,19 @@ public class SuperTicTacToePanel extends JPanel{
             for (int c = 0; c < game.getSize(); c++) {
 
                 board[r][c].setIcon(emptyIcon);
-                if (iBoard[r][c] == Cell.O)
+                if (iBoard[r][c] == Cell.O) {
                     board[r][c].setIcon(oIcon);
+                }
 
-                if (iBoard[r][c] == Cell.X)
+                if (iBoard[r][c] == Cell.X) {
                     board[r][c].setIcon(xIcon);
+                }
             }
         }
     }
     /*******************************************************************************************************************
-     *
+     *ButtonListener class that implements ActionListener
+     * Displays message if game is won by player and resets the game
      *
      *******************************************************************************************************************/
     private class ButtonListener implements ActionListener {
