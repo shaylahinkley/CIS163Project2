@@ -112,7 +112,8 @@ public class SuperTicTacToeGame {
      ******************************************************************************************************************/
     private GameStatus isWinner() {
 
-        //checking diagonal from top left to bottom right
+//
+//         //checking diagonal from top left to bottom right
 //         this.countWin = 0;
 //         int con = this.connections;
 //         for(int c = 0; c < size; c++) {
