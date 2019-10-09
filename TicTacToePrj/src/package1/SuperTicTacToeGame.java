@@ -33,6 +33,7 @@ public class SuperTicTacToeGame {
 
     /**instance variable for the amount of spaces taken up on the board */
     private int numSpaces;
+
     /** */
     private static final boolean AI = true;
 
@@ -67,7 +68,6 @@ public class SuperTicTacToeGame {
         status = GameStatus.IN_PROGRESS;
         board = new Cell[size][size];
         reset();
-
     }
 
     /*******************************************************************************************************************
@@ -106,7 +106,7 @@ public class SuperTicTacToeGame {
      ******************************************************************************************************************/
      private GameStatus isWinner() {
 
-         //checking for vertical rows
+        //checking for vertical rows
          for(int c = 0; c < size; c++) {
              for (int r = 0; r < (size - 2); r++) {
                  if (board[r][c] == Cell.X) {
@@ -125,6 +125,39 @@ public class SuperTicTacToeGame {
                  }
              }
          }
+
+//         int con = connections;
+//         int count = 0;
+//         for(int c = 0; c < size; c++) {
+//            for(int r = 0; r < size; r++) {
+//                for (int i = 0; i < con; i++) {
+//                    if (board[r + i][c] == Cell.X) {
+//                        count++;
+//                        if (count == connections) {
+//                            return GameStatus.X_WON;
+//                        }
+//                    }
+//                }
+//            }
+//         }
+
+//         int con = connections;
+//         int count = 0;
+//         for(int c = 0; c < size; c++) {
+//             for (int r = 0; r < size; r++) {
+//                 if (board[r][c] == Cell.X) {
+//                     for(int i = 0; i < con; i++) {
+//                         if(board[r + i][c] == Cell.X) {
+//                             count++;
+//                             if(count == connections) {
+//                                 return GameStatus.X_WON;
+//                             }
+//                         }
+//                     }
+//                 }
+//             }
+//         }
+
 
 
          //checking for horizontal rows
@@ -269,6 +302,14 @@ public class SuperTicTacToeGame {
      ******************************************************************************************************************/
      public void setTurnO() {
          turn = Cell.O;
+     }
+
+    /*******************************************************************************************************************
+     *Method that sets the number of connections needed
+     *
+     ******************************************************************************************************************/
+     public void setConnections(int connections) {
+         this.connections = connections;
      }
 
 
