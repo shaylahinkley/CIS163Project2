@@ -68,11 +68,9 @@ public class SuperTicTacToePanel extends JPanel{
             size = Integer.parseInt(JOptionPane.showInputDialog("Enter board size"));
         }
 
-
         //sets the valid game board size to boardSize
         game = new SuperTicTacToeGame(size);
         boardSize = size;
-
 
         //changes String into integer
         int numCon = Integer.parseInt(JOptionPane.showInputDialog("Enter number of connections"));
@@ -109,7 +107,6 @@ public class SuperTicTacToePanel extends JPanel{
             game.setTurnX();
         }
 
-
         //create Image Icons
         xIcon = new ImageIcon ("./src/x.jpg");
         oIcon = new ImageIcon ("./src/o.jpg");
@@ -122,6 +119,10 @@ public class SuperTicTacToePanel extends JPanel{
 
         // create game, listeners
         ButtonListener listener = new ButtonListener();
+
+        undoBtn = new JButton("Undo");
+        undoBtn.addActionListener(listener);
+        add(undoBtn, BorderLayout.SOUTH);
 
         //sets the layout of the game board
         //check if it works when it resize board game.getSize()
@@ -169,20 +170,20 @@ public class SuperTicTacToePanel extends JPanel{
         for (int r = 0; r < game.getSize(); r++) {
             for (int c = 0; c < game.getSize(); c++) {
 
+                //sets X icon
                 board[r][c].setIcon(emptyIcon);
                 if (iBoard[r][c] == Cell.O) {
                     board[r][c].setIcon(oIcon);
                 }
 
+                //sets O icon
                 if (iBoard[r][c] == Cell.X) {
                     board[r][c].setIcon(xIcon);
                 }
             }
         }
-
-//        undoBtn = new JButton("Undo");
-//        add(undoBtn, BorderLayout.SOUTH);
     }
+
     /*******************************************************************************************************************
      *ButtonListener class that implements ActionListener
      * Displays message if game is won by player and resets the game
@@ -200,28 +201,32 @@ public class SuperTicTacToePanel extends JPanel{
             }
             displayBoard();
 
+            if(undoBtn == e.getSource()) {
+                game.undo();
+                displayBoard();
+                return;
+            }
+
+            //if X won, resets the board and displays it
             if (game.getGameStatus() == GameStatus.X_WON) {
                 JOptionPane.showMessageDialog(null, "X won and O lost!\n The game will reset");
                 game.reset();
                 displayBoard();
             }
 
+            //if O, resets the board and displays it
             if (game.getGameStatus() == GameStatus.O_WON) {
                 JOptionPane.showMessageDialog(null, "O won and X lost!\n The game will reset");
                 game.reset();
                 displayBoard();
             }
 
+            //if it is a cats game, resets the board and displays it
             if (game.getGameStatus() == GameStatus.CATS) {
                 JOptionPane.showMessageDialog(null, "Draw!\n The game will reset");
                 game.reset();
                 displayBoard();
             }
-
-//            undoBtn.addActionListener(this);
-//            if(undoBtn == e.getSource()) {
-//                game.undo();
-//            }
         }
     }
 }

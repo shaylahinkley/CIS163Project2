@@ -18,7 +18,6 @@ public class SuperTicTacToeGame {
     /**Instance variable status of type GameStatus that sets the status of the game */
     private GameStatus status;
 
-
     /**Instance variable turn of type cell that sets what player turn it is */
     private Cell turn;
 
@@ -38,7 +37,7 @@ public class SuperTicTacToeGame {
 
     private int col;
 
-    /** */
+    /**instance variable for the amount of wins */
     private int countWin;
 
     /** */
@@ -86,8 +85,11 @@ public class SuperTicTacToeGame {
      *******************************************************************************************************************/
 
     public void select(int row, int col) {
-        this.row = row;
-        this.col = col;
+
+        //setting the Cell equal to a point
+        Point myPoint = new Point();
+        myPoint.x = col;
+        myPoint.y = row;
 
         if (board[row][col] != Cell.EMPTY) {
             return;
@@ -97,9 +99,12 @@ public class SuperTicTacToeGame {
 
         //if it is turn O, then switch to turn X, otherwise Turn O
         turn = (turn == Cell.O) ? Cell.X : Cell.O;
+
+        //checks if there is a winner
         status = isWinner();
 
-//        backup.add();
+        //adds the cell to the array list
+        backup.add(myPoint);
     }
 
     /********************************************************************************************************************
@@ -128,9 +133,8 @@ public class SuperTicTacToeGame {
         //change status to in progress
         status = GameStatus.IN_PROGRESS;
 
-        for(int i = 0; i < backup.size(); i++) {
-            backup.remove(i);
-        }
+        //clears the ArrayList
+        backup = new ArrayList<>();
 
     }
 
@@ -173,7 +177,6 @@ public class SuperTicTacToeGame {
         }
         return false;
     }
-
 
     /*******************************************************************************************************************
      *Method that checks the columns for connections
@@ -269,39 +272,38 @@ public class SuperTicTacToeGame {
         int countX2 = 0;
         int countY2 = 0;
 
-
         for(int i = 0; i < connections; i++) {
 
             //number of connections in row must be less than the size and the column connections must be greater or equal to 0
             if(row + i < size && col - i >= 0) {
-                  if (board[row + i][col - i] == Cell.X) {
-                      countX++;
-                      if (countX == connections) {
-                          return true;
-                      }
-                  }
-                  if (board[row + i][col - i] == Cell.O) {
-                      countY++;
-                      if (countY == connections) {
-                          return true;
-                      }
-                  }
+                if (board[row + i][col - i] == Cell.X) {
+                    countX++;
+                    if (countX == connections) {
+                        return true;
+                    }
+                }
+                if (board[row + i][col - i] == Cell.O) {
+                    countY++;
+                    if (countY == connections) {
+                        return true;
+                    }
+                }
             }
 
             //number of connections in column must be less than the size and the row connections must be greater or equal to 0
             if(row - i >= 0 && col + i < size) {
-                  if (board[row - i][col + i] == Cell.X) {
-                      countX2++;
-                      if (countX2 == connections) {
-                          return true;
-                      }
-                  }
-                  if (board[row - i ][col + i] == Cell.O) {
-                      countY2++;
-                      if (countY2 == connections) {
-                          return true;
-                      }
-                  }
+                if (board[row - i][col + i] == Cell.X) {
+                    countX2++;
+                    if (countX2 == connections) {
+                        return true;
+                    }
+                }
+                if (board[row - i ][col + i] == Cell.O) {
+                    countY2++;
+                    if (countY2 == connections) {
+                        return true;
+                    }
+                }
             }
         }
         return false;
@@ -333,6 +335,8 @@ public class SuperTicTacToeGame {
                 else if(isNCol(r,c, this.connections) && board[r][c] == Cell.O) {
                     return GameStatus.O_WON;
                 }
+
+                //checks if there are empty cells
                 else if(board[r][c] == Cell.EMPTY) {
                     this.numSpaces++;
                 }
@@ -367,18 +371,28 @@ public class SuperTicTacToeGame {
     /*******************************************************************************************************************
      *Method that enables user to undo the turn they just did using an undo button on the Panel
      *
-     *
-     *
      ******************************************************************************************************************/
-//    public void undo() {
-//        backup.remove(backup.size() - 1);
-//        turn = (turn == Cell.O) ? Cell.X : Cell.O;
-//
-//    }
+    public void undo() {
+
+        //makes sure there are items in the ArrayList
+        if(backup.size() > 0) {
+
+            //creates temporary point from the point in the last index of the ArrayList
+            Point point = backup.get(backup.size() - 1);
+
+            //makes the turn the same as the cell that was just undone
+            turn = board[point.y][point.x];
+
+            //empties the cell
+            board[point.y][point.x] = Cell.EMPTY;
+
+           //removes the point from the ArrayList
+            backup.remove(backup.size() - 1);
+        }
+    }
 
     /*******************************************************************************************************************
      *getter Method for GameStatus
-     *
      *
      * @return status GameStatus of the game
      ******************************************************************************************************************/
@@ -423,15 +437,6 @@ public class SuperTicTacToeGame {
     }
 
     /*******************************************************************************************************************
-     *setter Method for win. Sets instance variable to instance variable
-     *
-     * @param win int the number of wins
-     ******************************************************************************************************************/
-    public void setWin(int win) {
-        this.win = win;
-    }
-
-    /*******************************************************************************************************************
      *Method that sets the turn to X player
      *
      ******************************************************************************************************************/
@@ -454,43 +459,6 @@ public class SuperTicTacToeGame {
      ******************************************************************************************************************/
     public void setConnections(int connections) {
         this.connections = connections;
-    }
-
-    /*******************************************************************************************************************
-     *Method that sets the number of connections needed
-     *
-     * @param row
-     ******************************************************************************************************************/
-    public void setRow(int row) {
-        this.row = row;
-    }
-
-    /*******************************************************************************************************************
-     *Method that sets the number of connections needed
-     *
-     * @return row int current row
-     ******************************************************************************************************************/
-    public int getRow() {
-        return row;
-    }
-
-
-    /*******************************************************************************************************************
-     *Method that sets the number of connections needed
-     *
-     * @param col
-     ******************************************************************************************************************/
-    public void setCol(int col) {
-        this.col= col;
-    }
-
-    /*******************************************************************************************************************
-     *Method that sets the number of connections needed
-     *
-     * @return col int current col
-     ******************************************************************************************************************/
-    public int getCol() {
-        return col;
     }
 
 }
